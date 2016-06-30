@@ -691,10 +691,12 @@ h.Cmap_Sample_line    = line(NaN, NaN, 'Parent', Colormap_axis,'color','k', 'Hit
             
             if beam > 2;
                 Vel_Array = Vel_matrix(beam,Vel_Beam_3_4_index_2,:)/1000; 
-                depth = inline_depth_raw(Vel_Beam_3_4_index_2);
+                %depth = inline_depth_raw(Vel_Beam_3_4_index_2);
+                depth = inline_depth_raw;
             else                
                 Vel_Array = Vel_matrix(beam,Vel_Beam_1_2_index_1,:)/1000;
-                depth = inline_depth_raw(Vel_Beam_1_2_index_1);
+                %depth = inline_depth_raw(Vel_Beam_1_2_index_1);
+                depth = inline_depth_raw;
             end
             
             Vel_Array = squeeze(Vel_Array);
