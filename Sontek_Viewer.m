@@ -238,8 +238,6 @@ set(h.mainfigure,'visible','on')
 %% move this to a loading script
 
 [filenamestr, filepathstr] = uigetfile('.mat');
-f = warndlg('Plotting paused while file selected. Click OK to resume.');
-waitfor(f);
 
 Resize_Cback % This refreshes plot
 
@@ -398,10 +396,12 @@ h.Cmap_Sample_line    = line(NaN, NaN, 'Parent', Colormap_axis,'color','k', 'Hit
             h.Beam_num = 4;
         end
         
-        h.Beam_num
+             
+%         Vel_matrix(1,Vel_Beam_1_2_index_1,h.Sample_num)/1000
+       % cmap_plot_data = IQ_Data.(sprintf(strcat('Profile_',num2str(h.Beam_num-1),'_Vel')));
+       cmap_plot_data = Vel_matrix(h.Beam_num,:,:);
+       cmap_plot_data = permute(cmap_plot_data,[3, 2, 1]);
         
-        
-        cmap_plot_data = IQ_Data.(sprintf(strcat('Profile_',num2str(h.Beam_num-1),'_Vel')));
         cmap_Blanking_distance = IQ_Data.(sprintf(strcat('FlowSubData_PrfHeader_',num2str(h.Beam_num-1),'_BlankingDistance')));
         cmap_Cell_Size = IQ_Data.(sprintf(strcat('FlowSubData_PrfHeader_',num2str(h.Beam_num-1),'_CellSize')));
         
@@ -416,8 +416,8 @@ h.Cmap_Sample_line    = line(NaN, NaN, 'Parent', Colormap_axis,'color','k', 'Hit
         end
         
         
-        plotting = -cmap_plot_data/1000;
-        plotting(abs(plotting)>100000) = -0.01;
+        plotting = cmap_plot_data/1000;
+%         plotting(abs(plotting)>100000) = -0.01;
         x = IQ_Data.FlowSubData_FirstAdpSampleTime;
         x = datenum((x/1000/1000+datenum(2000,1,1,0,0,0)*60*60*24)/60/60/24);
         y = depth(end,:);
@@ -442,6 +442,10 @@ h.Cmap_Sample_line    = line(NaN, NaN, 'Parent', Colormap_axis,'color','k', 'Hit
         dateaxis(Colormap_axis)
         xlabel(Colormap_axis ,'Sampling Time')
         ylabel(Colormap_axis ,'Depth [m]')
+        
+        % could use the following to make the 2 axis match, but colormap
+        % cell sizes will cause some plotting 
+        %ylim(Colormap_axis, get(Vel_axis, 'ylim'));
         h.Cmap_Sample_line    = line('xdata',xdata ,'ydata', ydata, 'Parent', Colormap_axis,'color','k', 'HitTest','off','MarkerFaceColor','k','Markersize',2);
 
         
@@ -458,8 +462,6 @@ h.Cmap_Sample_line    = line(NaN, NaN, 'Parent', Colormap_axis,'color','k', 'Hit
         title(Colormap_axis ,Title_string);                   
        
     end
-
-
 
 
 
@@ -667,18 +669,7 @@ h.Cmap_Sample_line    = line(NaN, NaN, 'Parent', Colormap_axis,'color','k', 'Hit
             ActivesheetRange = get(Activesheet,'Range',strcat('g3:g',num2str(length(Beam_3_Data)+2)));               
             set(ActivesheetRange, 'Value', Beam_3_Data')           
         
-        
-        
-        
         end
-        
-        
-        
-        
-        
-        
-        
-               
                sheet1 = get(Sheets, 'Item', 1);               
                invoke(sheet1, 'Activate');
                % Now save the workbook               
