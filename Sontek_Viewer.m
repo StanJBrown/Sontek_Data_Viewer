@@ -104,7 +104,7 @@ Colormap_axis = axes('Parent',h.mainfigure,'Units','pixels','box','on','Position
     %datetick(Colormap_axis,'x','mmm-dd HH:MM')
     xlabel(Colormap_axis ,'Sampling Time')
     ylabel(Colormap_axis ,'Depth [m]')
-    title(Colormap_axis ,'Beam One: Facing Upstream ')  
+    title(Colormap_axis ,'Beam One: (XZ).X-Center')  
     c = colorbar;
     ylabel(c,'Water Velocity [ms^{-1}]')
     
@@ -295,8 +295,8 @@ end
         Vel_Beam_3_4_index_2 = skew_depth_raw < IQ_Data.FlowData_Depth(h.Sample_num); 
         
         Change_Vel_plot()
-        legend(Vel_axis,'Upstream','Downstream','Left Beam','Right Beam', 'Location','SouthEast' )
-        title(Vel_axis,{'Beam Velocity Profile at:' datestr(sample_time_dnum(h.Sample_num))});
+        legend(Vel_axis,'Velocity (XZ).X-Center','Velocity (XZ).Z-Center','Velocity (XZ).X-Left','Velocity (XZ).X-Right', 'Location','SouthEast' )
+        title(Vel_axis,{'Velocity Profile at:' datestr(sample_time_dnum(h.Sample_num))});
         
         
     function Change_Vel_plot(varargin)
@@ -338,7 +338,7 @@ set(SNR_1_line, 'xdata',sample_time_dnum,'ydata',IQ_Data.FlowData_SNR(:,2));
 set(SNR_2_line, 'xdata',sample_time_dnum,'ydata',IQ_Data.FlowData_SNR(:,3));
 set(SNR_3_line, 'xdata',sample_time_dnum,'ydata',IQ_Data.FlowData_SNR(:,4));
 dateaxis(SNR_axis)
-legend(SNR_axis,'Upstream','Downstream', 'Left Beam', 'Right Beam')
+legend(SNR_axis,'Velocity (XZ).X-Center','Velocity (XZ).Z-Center','Velocity (XZ).X-Left','Velocity (XZ).X-Right')
 
 %%
 
@@ -370,7 +370,7 @@ set(Colormap_axis,'xlim',[min(x),max(x)],'YDir','normal')
 dateaxis(Colormap_axis)
 xlabel(Colormap_axis ,'Sampling Time')
 ylabel(Colormap_axis ,'Depth [m]')
-title(Colormap_axis ,'Beam One: Facing Upstream ') 
+title(Colormap_axis ,'Beam 1: (XZ).X-Center') 
 %this line must be made after the imagesc call as it appears matlab likes
 %to delete all other children from an axis when imagesc is called
 %unfortunatly. 
@@ -451,13 +451,13 @@ h.Cmap_Sample_line    = line(NaN, NaN, 'Parent', Colormap_axis,'color','k', 'Hit
         
         switch(h.Beam_num)
             case(1)
-                Title_string = 'Beam One: Facing Upstream ';
+                Title_string = 'Beam One: (XZ).X-Center';
             case(2)
-                Title_string = 'Beam Two: Facing Downstream ';
+                Title_string = 'Beam Two: (XZ).Z-Center';
             case(3)
-                Title_string = 'Beam Three: Facing Left ';
+                Title_string = 'Beam Three: (XZ).X-Left';
             case(4)
-                Title_string = 'Beam Four: Facing Right ';        
+                Title_string = 'Beam Four: (XZ).X-Right';        
         end
         title(Colormap_axis ,Title_string);                   
        
